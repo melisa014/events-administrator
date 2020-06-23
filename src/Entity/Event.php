@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,7 +31,7 @@ class Event
     /**
      * @ORM\Column(type="date_immutable")
      */
-    private $у�endDate;
+    private $endDate;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,7 +41,7 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $екфtransport;
+    private $transport;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -89,26 +90,26 @@ class Event
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeImmutable
+    public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeImmutable $startDate): self
+    public function setStartDate(DateTimeImmutable $startDate): self
     {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getу�endDate(): ?\DateTimeImmutable
+    public function getEndDate(): ?DateTimeImmutable
     {
-        return $this->у�endDate;
+        return $this->endDate;
     }
 
-    public function setу�endDate(\DateTimeImmutable $у�endDate): self
+    public function setEndDate(DateTimeImmutable $endDate): self
     {
-        $this->у�endDate = $у�endDate;
+        $this->endDate = $endDate;
 
         return $this;
     }
@@ -125,14 +126,14 @@ class Event
         return $this;
     }
 
-    public function getекфtransport(): ?string
+    public function getTransport(): ?string
     {
-        return $this->екфtransport;
+        return $this->transport;
     }
 
-    public function setекфtransport(string $екфtransport): self
+    public function setTransport(string $transport): self
     {
-        $this->екфtransport = $екфtransport;
+        $this->transport = $transport;
 
         return $this;
     }
