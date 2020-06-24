@@ -24,6 +24,16 @@ class Event
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $organizer;
+
+    /**
      * @ORM\Column(type="date_immutable")
      */
     private $startDate;
@@ -71,7 +81,12 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $tasks;
+    private $parts;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $notifications;
 
     public function getId(): ?int
     {
@@ -86,6 +101,30 @@ class Event
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getOrganizer(): ?string
+    {
+        return $this->organizer;
+    }
+
+    public function setOrganizer(string $organizer): self
+    {
+        $this->organizer = $organizer;
 
         return $this;
     }
@@ -198,14 +237,26 @@ class Event
         return $this;
     }
 
-    public function getTasks(): ?string
+    public function getParts(): ?string
     {
-        return $this->tasks;
+        return $this->parts;
     }
 
-    public function setTasks(string $tasks): self
+    public function setParts(string $parts): self
     {
-        $this->tasks = $tasks;
+        $this->parts = $parts;
+
+        return $this;
+    }
+
+    public function getNotifications(): ?string
+    {
+        return $this->notifications;
+    }
+
+    public function setNotifications(string $notifications): self
+    {
+        $this->notifications = $notifications;
 
         return $this;
     }

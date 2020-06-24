@@ -34,9 +34,14 @@ class Person
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $events;
 
     /**
      * @ORM\Column(type="date_immutable")
@@ -97,6 +102,20 @@ class Person
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getEvents(): ?string
+    {
+        return $this->events;
+    }
+
+    public function addEvent(string $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+        }
 
         return $this;
     }
