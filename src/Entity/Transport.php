@@ -34,7 +34,12 @@ class Transport
     private $tikets;
 
     /**
-     * @ORM\Column(type="date_immutable", nullable=true)
+     * @ORM\Column(type="string", length=255)
+     */
+    private $event;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 
@@ -75,6 +80,18 @@ class Transport
     public function setTikets(?string $tikets): self
     {
         $this->tikets = $tikets;
+
+        return $this;
+    }
+
+    public function getEvent(): ?string
+    {
+        return $this->event;
+    }
+
+    public function setEvent(string $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }

@@ -29,12 +29,12 @@ class Tiket
     private $arriveTo;
 
     /**
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $departureAt;
 
     /**
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $arriveAt;
 

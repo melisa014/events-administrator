@@ -44,12 +44,12 @@ class Person
     private $events;
 
     /**
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $invitedAt;
 
     /**
-     * @ORM\Column(type="date_immutable", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 

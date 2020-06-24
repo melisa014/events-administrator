@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\NutritionRepository;
+use App\Repository\EquipmentRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=NutritionRepository::class)
+ * @ORM\Entity(repositoryClass=EquipmentRepository::class)
  */
-class Nutrition
+class Equipment
 {
     /**
      * @ORM\Id()
@@ -18,9 +19,9 @@ class Nutrition
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $personsNumber;
+    private $name;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 0})
@@ -28,9 +29,9 @@ class Nutrition
     private $cost;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $products;
+    private $timetableItem;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -47,14 +48,14 @@ class Nutrition
         return $this->id;
     }
 
-    public function getPersonsNumber(): ?int
+    public function getName(): ?string
     {
-        return $this->personsNumber;
+        return $this->name;
     }
 
-    public function setPersonsNumber(?int $personsNumber): self
+    public function setName(string $name): self
     {
-        $this->personsNumber = $personsNumber;
+        $this->name = $name;
 
         return $this;
     }
@@ -71,14 +72,14 @@ class Nutrition
         return $this;
     }
 
-    public function getProducts(): ?string
+    public function getTimetableItem(): ?string
     {
-        return $this->products;
+        return $this->timetableItem;
     }
 
-    public function setProducts(string $products): self
+    public function setTimetableItem(string $timetableItem): self
     {
-        $this->products = $products;
+        $this->timetableItem = $timetableItem;
 
         return $this;
     }
@@ -95,12 +96,12 @@ class Nutrition
         return $this;
     }
 
-    public function getConfirmedAt(): ?\DateTimeImmutable
+    public function getConfirmedAt(): ?DateTimeImmutable
     {
         return $this->confirmedAt;
     }
 
-    public function setConfirmedAt(?\DateTimeImmutable $confirmedAt): self
+    public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
     {
         $this->confirmedAt = $confirmedAt;
 

@@ -33,7 +33,7 @@ class Location
     private $contactPerson;
 
     /**
-     * @ORM\Column(type="date_immutable", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 

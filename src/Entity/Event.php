@@ -34,12 +34,12 @@ class Event
     private $organizer;
 
     /**
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $startDate;
 
     /**
-     * @ORM\Column(type="date_immutable")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $endDate;
 
@@ -69,6 +69,8 @@ class Event
     private $equipments;
 
     /**
+     * Только участники мероприятия (ответственные за выполнение задач не включены)
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $members;
