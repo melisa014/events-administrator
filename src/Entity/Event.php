@@ -46,12 +46,12 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $location;
+    private $locations;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $transport;
+    private $transports;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -66,7 +66,7 @@ class Event
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $equipment;
+    private $equipments;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -153,26 +153,26 @@ class Event
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocations(): ?string
     {
-        return $this->location;
+        return $this->locations;
     }
 
-    public function setLocation(string $location): self
+    public function setLocations(string $locations): self
     {
-        $this->location = $location;
+        $this->locations = $locations;
 
         return $this;
     }
 
-    public function getTransport(): ?string
+    public function getTransports(): ?string
     {
-        return $this->transport;
+        return $this->transports;
     }
 
-    public function setTransport(string $transport): self
+    public function setTransports(string $transports): self
     {
-        $this->transport = $transport;
+        $this->transports = $transports;
 
         return $this;
     }
@@ -201,14 +201,14 @@ class Event
         return $this;
     }
 
-    public function getEquipment(): ?string
+    public function getEquipments(): ?string
     {
-        return $this->equipment;
+        return $this->equipments;
     }
 
-    public function setEquipment(string $equipment): self
+    public function setEquipments(string $equipments): self
     {
-        $this->equipment = $equipment;
+        $this->equipments = $equipments;
 
         return $this;
     }
