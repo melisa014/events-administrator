@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PartRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,52 +19,82 @@ class Part
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
-    private $type;
+    private $partType;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="integer")
      */
     private $partId;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="parts")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Task[]
+     *
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="part", cascade={"remove", "persist"})
      */
     private $tasks;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Comment[]
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="part", cascade={"remove", "persist"})
      */
     private $comments;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
+    /**
+     * @return string|null
+     */
+    public function getPartType(): ?string
     {
-        return $this->type;
+        return $this->partType;
     }
 
-    public function setType(string $type): self
+    /**
+     * @param string $partType
+     *
+     * @return $this
+     */
+    public function setPartType(string $partType): self
     {
-        $this->type = $type;
+        $this->partType = $partType;
 
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getPartId(): ?int
     {
         return $this->partId;
     }
 
+    /**
+     * @param int $partId
+     *
+     * @return $this
+     */
     public function setPartId(int $partId): self
     {
         $this->partId = $partId;
@@ -71,38 +102,66 @@ class Part
         return $this;
     }
 
-    public function getEevent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
         return $this;
     }
 
-    public function getTasks(): ?string
+    /**
+     * @return Collection|Task[]|null
+     */
+    public function getTasks(): ?Collection
     {
         return $this->tasks;
     }
 
-    public function setTasks(string $tasks): self
+    /**
+     * @param Task $task
+     *
+     * @return $this
+     */
+    public function addTask(Task $task): self
     {
-        $this->tasks = $tasks;
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+        }
 
         return $this;
     }
 
-    public function getComments(): ?string
+    /**
+     * @return Collection|Comment[]|null
+     */
+    public function getComments(): ?Collection
     {
         return $this->comments;
     }
 
-    public function setComments(string $comments): self
+    /**
+     * @param Comment $comment
+     *
+     * @return $this
+     */
+    public function addComment(Comment $comment): self
     {
-        $this->comments = $comments;
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+        }
 
         return $this;
     }

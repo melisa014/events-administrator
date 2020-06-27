@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Comment
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -18,25 +20,41 @@ class Comment
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      */
     private $text;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Part
+     *
+     * @ORM\ManyToOne(targetEntity="Part", inversedBy="comments")
+     * @ORM\JoinColumn(name="part_id", referencedColumnName="id")
      */
     private $part;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getText(): ?string
     {
         return $this->text;
     }
 
+    /**
+     * @param string $text
+     *
+     * @return $this
+     */
     public function setText(string $text): self
     {
         $this->text = $text;
@@ -44,12 +62,20 @@ class Comment
         return $this;
     }
 
-    public function getPart(): ?string
+    /**
+     * @return Part|null
+     */
+    public function getPart(): ?Part
     {
         return $this->part;
     }
 
-    public function setPart(string $part): self
+    /**
+     * @param Part $part
+     *
+     * @return $this
+     */
+    public function setPart(Part $part): self
     {
         $this->part = $part;
 

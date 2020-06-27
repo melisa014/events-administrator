@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EventRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Event
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -19,87 +22,126 @@ class Event
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @var EventType
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Person
+     *
+     * @ORM\OneToOne(targetEntity="Person")
+     * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id")
      */
     private $organizer;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable")
      */
     private $startDate;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable")
      */
     private $endDate;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Location[]
+     *
+     * @ORM\OneToMany(targetEntity="Location", mappedBy="event", cascade={"remove", "persist"})
      */
     private $locations;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Transport[]
+     *
+     * @ORM\OneToMany(targetEntity="Transport", mappedBy="event", cascade={"remove", "persist"})
      */
     private $transports;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Nutrition
+     *
+     * @ORM\OneToOne(targetEntity="Nutrition")
+     * @ORM\JoinColumn(name="nutrition_id", referencedColumnName="id")
      */
     private $nutrition;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | TimetableItem[]
+     *
+     * @ORM\OneToMany(targetEntity="TimetableItem", mappedBy="event", cascade={"remove", "persist"})
      */
-    private $timetable;
+    private $timetableItems;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Equipment[]
+     *
+     * @ORM\OneToMany(targetEntity="Equipment", mappedBy="event", cascade={"remove", "persist"})
      */
     private $equipments;
 
     /**
-     * Только участники мероприятия (ответственные за выполнение задач не включены)
+     * @var Collection | Member[]
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="event", cascade={"remove", "persist"})
      */
     private $members;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Notification[]
+     *
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="event", cascade={"remove", "persist"})
      */
     private $documents;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Part[]
+     *
+     * @ORM\OneToMany(targetEntity="Part", mappedBy="event", cascade={"remove", "persist"})
      */
     private $parts;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Notification[]
+     *
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="event", cascade={"remove", "persist"})
      */
     private $notifications;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -107,35 +149,59 @@ class Event
         return $this;
     }
 
-    public function getType(): ?string
+    /**
+     * @return EventType|null
+     */
+    public function getType(): ?EventType
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    /**
+     * @param EventType $type
+     *
+     * @return $this
+     */
+    public function setType(EventType $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getOrganizer(): ?string
+    /**
+     * @return Person|null
+     */
+    public function getOrganizer(): ?Person
     {
         return $this->organizer;
     }
 
-    public function setOrganizer(string $organizer): self
+    /**
+     * @param Person $organizer
+     *
+     * @return $this
+     */
+    public function setOrganizer(Person $organizer): self
     {
         $this->organizer = $organizer;
 
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
     }
 
+    /**
+     * @param DateTimeImmutable $startDate
+     *
+     * @return $this
+     */
     public function setStartDate(DateTimeImmutable $startDate): self
     {
         $this->startDate = $startDate;
@@ -143,11 +209,19 @@ class Event
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getEndDate(): ?DateTimeImmutable
     {
         return $this->endDate;
     }
 
+    /**
+     * @param DateTimeImmutable $endDate
+     *
+     * @return $this
+     */
     public function setEndDate(DateTimeImmutable $endDate): self
     {
         $this->endDate = $endDate;
@@ -155,110 +229,198 @@ class Event
         return $this;
     }
 
-    public function getLocations(): ?string
+    /**
+     * @return Collection|Location[]|null
+     */
+    public function getLocations(): ?Collection
     {
         return $this->locations;
     }
 
-    public function setLocations(string $locations): self
+    /**
+     * @param Location $location
+     *
+     * @return $this
+     */
+    public function addLocation(Location $location): self
     {
-        $this->locations = $locations;
+        if (!$this->locations->contains($location)) {
+            $this->locations->add($location);
+        }
 
         return $this;
     }
 
-    public function getTransports(): ?string
+    /**
+     * @return Collection|Transport[]|null
+     */
+    public function getTransports(): ?Collection
     {
         return $this->transports;
     }
 
-    public function setTransports(string $transports): self
+    /**
+     * @param Transport $transport
+     *
+     * @return $this
+     */
+    public function addTransport(Transport $transport): self
     {
-        $this->transports = $transports;
+        if (!$this->transports->contains($transport)) {
+            $this->transports->add($transport);
+        }
 
         return $this;
     }
 
-    public function getNutrition(): ?string
+    /**
+     * @return Nutrition|null
+     */
+    public function getNutrition(): ?Nutrition
     {
         return $this->nutrition;
     }
 
-    public function setNutrition(string $nutrition): self
+    /**
+     * @param Nutrition $nutrition
+     *
+     * @return $this
+     */
+    public function setNutrition(Nutrition $nutrition): self
     {
         $this->nutrition = $nutrition;
 
         return $this;
     }
 
-    public function getTimetable(): ?string
+    /**
+     * @return Collection|TimetableItem[]|null
+     */
+    public function getTimetableItems(): ?Collection
     {
-        return $this->timetable;
+        return $this->timetableItems;
     }
 
-    public function setTimetable(string $timetable): self
+    /**
+     * @param TimetableItem $timetableItem
+     *
+     * @return $this
+     */
+    public function addTimetableItem(TimetableItem $timetableItem): self
     {
-        $this->timetable = $timetable;
+        if (!$this->timetableItems->contains($timetableItem)) {
+            $this->timetableItems->add($timetableItem);
+        }
 
         return $this;
     }
 
-    public function getEquipments(): ?string
+    /**
+     * @return Collection|Equipment[]|null
+     */
+    public function getEquipments(): ?Collection
     {
         return $this->equipments;
     }
 
-    public function setEquipments(string $equipments): self
+    /**
+     * @param Equipment $equipment
+     *
+     * @return $this
+     */
+    public function addEquipment(Equipment $equipment): self
     {
-        $this->equipments = $equipments;
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments->add($equipment);
+        }
 
         return $this;
     }
 
-    public function getMembers(): ?string
+    /**
+     * @return Collection|Member[]|null
+     */
+    public function getMembers(): ?Collection
     {
         return $this->members;
     }
 
-    public function setMembers(string $members): self
+    /**
+     * @param Member $member
+     *
+     * @return $this
+     */
+    public function addMember(Member $member): self
     {
-        $this->members = $members;
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+        }
 
         return $this;
     }
 
-    public function getDocuments(): ?string
+    /**
+     * @return Collection|Document[]|null
+     */
+    public function getDocuments(): ?Collection
     {
         return $this->documents;
     }
 
-    public function setDocuments(string $documents): self
+    /**
+     * @param Document $document
+     *
+     * @return $this
+     */
+    public function addDocument(Document $document): self
     {
-        $this->documents = $documents;
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+        }
 
         return $this;
     }
 
-    public function getParts(): ?string
+    /**
+     * @return Collection|Part[]|null
+     */
+    public function getParts(): ?Collection
     {
         return $this->parts;
     }
 
-    public function setParts(string $parts): self
+    /**
+     * @param Part $part
+     *
+     * @return $this
+     */
+    public function addPart(Part $part): self
     {
-        $this->parts = $parts;
+        if (!$this->parts->contains($part)) {
+            $this->parts->add($part);
+        }
 
         return $this;
     }
 
-    public function getNotifications(): ?string
+    /**
+     * @return Collection|Notification[]|null
+     */
+    public function getNotifications(): ?Collection
     {
         return $this->notifications;
     }
 
-    public function setNotifications(string $notifications): self
+    /**
+     * @param Notification $notification
+     *
+     * @return $this
+     */
+    public function setNotification(Notification $notification): self
     {
-        $this->notifications = $notifications;
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+        }
 
         return $this;
     }

@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
-use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Person
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -19,50 +21,61 @@ class Person
     private $id;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $middleName;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var Collection | Member[]
+     *
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="person")
      */
-    private $events;
+    private $memberships;
 
     /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @return int|null
      */
-    private $invitedAt;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $confirmedAt;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
+    /**
+     * @param string $firstName
+     *
+     * @return $this
+     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
@@ -70,11 +83,19 @@ class Person
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getMiddleName(): ?string
     {
         return $this->middleName;
     }
 
+    /**
+     * @param string $middleName
+     *
+     * @return $this
+     */
     public function setMiddleName(string $middleName): self
     {
         $this->middleName = $middleName;
@@ -82,11 +103,19 @@ class Person
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
+    /**
+     * @param string $lastName
+     *
+     * @return $this
+     */
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -94,11 +123,19 @@ class Person
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPhone(): ?string
     {
         return $this->phone;
     }
 
+    /**
+     * @param string $phone
+     *
+     * @return $this
+     */
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
@@ -106,40 +143,24 @@ class Person
         return $this;
     }
 
-    public function getEvents(): ?string
+    /**
+     * @return Collection|Member[]|null
+     */
+    public function getMemberships(): ?Collection
     {
-        return $this->events;
+        return $this->memberships;
     }
 
-    public function addEvent(string $event): self
+    /**
+     * @param Member $member
+     *
+     * @return $this
+     */
+    public function addMembership(Member $member): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
+        if (!$this->memberships->contains($member)) {
+            $this->memberships->add($member);
         }
-
-        return $this;
-    }
-
-    public function getInvitedAt(): ?DateTimeImmutable
-    {
-        return $this->invitedAt;
-    }
-
-    public function setInvitedAt(DateTimeImmutable $invitedAt): self
-    {
-        $this->invitedAt = $invitedAt;
-
-        return $this;
-    }
-
-    public function getConfirmedAt(): ?DateTimeImmutable
-    {
-        return $this->confirmedAt;
-    }
-
-    public function setConfirmedAt(DateTimeImmutable $confirmedAt): self
-    {
-        $this->confirmedAt = $confirmedAt;
 
         return $this;
     }
