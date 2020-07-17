@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Equipment
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -19,40 +21,55 @@ class Equipment
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $cost;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var TimetableItem
+     *
+     * @ORM\ManyToOne(targetEntity="TimetableItem", inversedBy="equipments")
+     * @ORM\JoinColumn(name="timetable_item_id", referencedColumnName="id")
      */
     private $timetableItem;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $event;
-
-    /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -60,11 +77,19 @@ class Equipment
         return $this;
     }
 
-    public function getCost(): ?int
+    /**
+     * @return float|null
+     */
+    public function getCostInRubles(): ?float
     {
-        return $this->cost;
+        return $this->cost/100;
     }
 
+    /**
+     * @param int $cost
+     *
+     * @return $this
+     */
     public function setCost(int $cost): self
     {
         $this->cost = $cost;
@@ -72,35 +97,39 @@ class Equipment
         return $this;
     }
 
-    public function getTimetableItem(): ?string
+    /**
+     * @return TimetableItem|null
+     */
+    public function getTimetableItem(): ?TimetableItem
     {
         return $this->timetableItem;
     }
 
-    public function setTimetableItem(string $timetableItem): self
+    /**
+     * @param TimetableItem $timetableItem
+     *
+     * @return $this
+     */
+    public function setTimetableItem(TimetableItem $timetableItem): self
     {
         $this->timetableItem = $timetableItem;
 
         return $this;
     }
 
-    public function getEvent(): ?string
-    {
-        return $this->event;
-    }
-
-    public function setEvent(string $event): self
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getConfirmedAt(): ?DateTimeImmutable
     {
         return $this->confirmedAt;
     }
 
+    /**
+     * @param DateTimeImmutable|null $confirmedAt
+     *
+     * @return $this
+     */
     public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
     {
         $this->confirmedAt = $confirmedAt;

@@ -21,7 +21,7 @@ class Notification
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
      * @ORM\Column(type="text")
      */

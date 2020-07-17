@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TimetableItemRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class TimetableItem
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -19,45 +22,70 @@ class TimetableItem
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable")
      */
     private $startDate;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable")
      */
     private $endDate;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection | Equipment[]
+     *
+     * @ORM\OneToMany(targetEntity="Equipment", mappedBy="event", cascade={"remove", "persist"})
      */
     private $equipments;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Person
+     *
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="notifications")
+     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $chargePerson;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="timetableItems")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -65,11 +93,19 @@ class TimetableItem
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
     }
 
+    /**
+     * @param DateTimeImmutable $startDate
+     *
+     * @return $this
+     */
     public function setStartDate(DateTimeImmutable $startDate): self
     {
         $this->startDate = $startDate;
@@ -77,11 +113,19 @@ class TimetableItem
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getEndDate(): ?DateTimeImmutable
     {
         return $this->endDate;
     }
 
+    /**
+     * @param DateTimeImmutable $endDate
+     *
+     * @return $this
+     */
     public function setEndDate(DateTimeImmutable $endDate): self
     {
         $this->endDate = $endDate;
@@ -89,36 +133,62 @@ class TimetableItem
         return $this;
     }
 
-    public function getEquipments(): ?string
+    /**
+     * @return Collection|Notification[]|null
+     */
+    public function getEquipments(): ?Collection
     {
         return $this->equipments;
     }
 
-    public function setEquipments(string $equipments): self
+    /**
+     * @param Equipment $equipment
+     *
+     * @return $this
+     */
+    public function addEquipments(Equipment $equipment): self
     {
-        $this->equipments = $equipments;
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments->add($equipment);
+        }
 
         return $this;
     }
 
-    public function getChargePerson(): ?string
+    /**
+     * @return Person|null
+     */
+    public function getChargePerson(): ?Person
     {
         return $this->chargePerson;
     }
 
-    public function setChargePerson(string $chargePerson): self
+    /**
+     * @param Person $chargePerson
+     *
+     * @return $this
+     */
+    public function setChargePerson(Person $chargePerson): self
     {
         $this->chargePerson = $chargePerson;
 
         return $this;
     }
 
-    public function getEvent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
