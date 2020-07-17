@@ -56,6 +56,20 @@ class Person
     private $memberships;
 
     /**
+     * @var Collection | Task[]
+     *
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="person", cascade={"remove", "persist"})
+     */
+    private $tasks;
+
+    /**
+     * @var Collection | Notification[]
+     *
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="person", cascade={"remove", "persist"})
+     */
+    private $notifications;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -160,6 +174,50 @@ class Person
     {
         if (!$this->memberships->contains($member)) {
             $this->memberships->add($member);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task[]|null
+     */
+    public function getTasks(): ?Collection
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param Task $task
+     *
+     * @return $this
+     */
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]|null
+     */
+    public function getNotifications(): ?Collection
+    {
+        return $this->notifications;
+    }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return $this
+     */
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
         }
 
         return $this;

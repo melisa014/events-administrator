@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\NotificationRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Notification
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -18,40 +21,63 @@ class Notification
     private $id;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="text")
      */
     private $message;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Person
+     *
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="notifications")
+     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="notifications")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable")
      */
     private $plannedSentDate;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $sentDate;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
+    /**
+     * @param string $message
+     *
+     * @return $this
+     */
     public function setMessage(string $message): self
     {
         $this->message = $message;
@@ -59,48 +85,80 @@ class Notification
         return $this;
     }
 
-    public function getPerson(): ?string
+    /**
+     * @return Person|null
+     */
+    public function getPerson(): ?Person
     {
         return $this->person;
     }
 
-    public function setPerson(string $person): self
+    /**
+     * @param Person $person
+     *
+     * @return $this
+     */
+    public function setPerson(Person $person): self
     {
         $this->person = $person;
 
         return $this;
     }
 
-    public function getEevent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
         return $this;
     }
 
-    public function getPlannedSentDate(): ?\DateTimeImmutable
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getPlannedSentDate(): ?DateTimeImmutable
     {
         return $this->plannedSentDate;
     }
 
-    public function setPlannedSentDate(\DateTimeImmutable $plannedSentDate): self
+    /**
+     * @param DateTimeImmutable $plannedSentDate
+     *
+     * @return $this
+     */
+    public function setPlannedSentDate(DateTimeImmutable $plannedSentDate): self
     {
         $this->plannedSentDate = $plannedSentDate;
 
         return $this;
     }
 
-    public function getSentDate(): ?\DateTimeImmutable
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getSentDate(): ?DateTimeImmutable
     {
         return $this->sentDate;
     }
 
-    public function setSentDate(\DateTimeImmutable $sentDate): self
+    /**
+     * @param DateTimeImmutable $sentDate
+     *
+     * @return $this
+     */
+    public function setSentDate(DateTimeImmutable $sentDate): self
     {
         $this->sentDate = $sentDate;
 
