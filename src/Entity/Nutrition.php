@@ -38,14 +38,15 @@ class Nutrition
     /**
      * @var Collection|Product[]|null
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="nutrition", cascade={"remove", "persist"})
      */
     private $products;
 
     /**
      * @var Event
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Event")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
