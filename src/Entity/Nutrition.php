@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NutritionRepository;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Nutrition
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -18,52 +22,81 @@ class Nutrition
     private $id;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $personsNumber;
+    private $personsCount;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $cost;
 
     /**
+     * @var Collection|Product[]|null
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $products;
 
     /**
+     * @var Event
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $event;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPersonsNumber(): ?int
+    /**
+     * @return int|null
+     */
+    public function getPersonsCount(): ?int
     {
-        return $this->personsNumber;
+        return $this->personsCount;
     }
 
-    public function setPersonsNumber(?int $personsNumber): self
+    /**
+     * @param int|null $personsCount
+     *
+     * @return $this
+     */
+    public function setPersonsCount(?int $personsCount): self
     {
-        $this->personsNumber = $personsNumber;
+        $this->personsCount = $personsCount;
 
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getCost(): ?int
     {
         return $this->cost;
     }
 
+    /**
+     * @param int $cost
+     *
+     * @return $this
+     */
     public function setCost(int $cost): self
     {
         $this->cost = $cost;
@@ -71,36 +104,62 @@ class Nutrition
         return $this;
     }
 
-    public function getProducts(): ?string
+    /**
+     * @return Collection|null
+     */
+    public function getProducts(): ?Collection
     {
         return $this->products;
     }
 
-    public function setProducts(string $products): self
+    /**
+     * @param Product $product
+     *
+     * @return $this
+     */
+    public function addProduct(Product $product): self
     {
-        $this->products = $products;
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+        }
 
         return $this;
     }
 
-    public function getEvent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
         return $this;
     }
 
-    public function getConfirmedAt(): ?\DateTimeImmutable
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getConfirmedAt(): ?DateTimeImmutable
     {
         return $this->confirmedAt;
     }
 
-    public function setConfirmedAt(?\DateTimeImmutable $confirmedAt): self
+    /**
+     * @param DateTimeImmutable|null $confirmedAt
+     *
+     * @return $this
+     */
+    public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
     {
         $this->confirmedAt = $confirmedAt;
 

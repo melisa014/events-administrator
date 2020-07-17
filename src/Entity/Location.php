@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Location
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -18,40 +21,63 @@ class Location
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $address;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $cost;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Person
+     *
+     * @ORM\OneToOne(targetEntity="Person")
+     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $contactPerson;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="locations")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getAddress(): ?string
     {
         return $this->address;
     }
 
+    /**
+     * @param string $address
+     *
+     * @return $this
+     */
     public function setAddress(string $address): self
     {
         $this->address = $address;
@@ -59,11 +85,19 @@ class Location
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getCost(): ?int
     {
         return $this->cost;
     }
 
+    /**
+     * @param int $cost
+     *
+     * @return $this
+     */
     public function setCost(int $cost): self
     {
         $this->cost = $cost;
@@ -71,36 +105,60 @@ class Location
         return $this;
     }
 
-    public function getContactPerson(): ?string
+    /**
+     * @return Person|null
+     */
+    public function getContactPerson(): ?Person
     {
         return $this->contactPerson;
     }
 
-    public function setContactPerson(string $contactPerson): self
+    /**
+     * @param Person $contactPerson
+     *
+     * @return $this
+     */
+    public function setContactPerson(Person $contactPerson): self
     {
         $this->contactPerson = $contactPerson;
 
         return $this;
     }
 
-    public function getConfirmedAt(): ?\DateTimeImmutable
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getConfirmedAt(): ?DateTimeImmutable
     {
         return $this->confirmedAt;
     }
 
-    public function setConfirmedAt(\DateTimeImmutable $confirmedAt): self
+    /**
+     * @param DateTimeImmutable $confirmedAt
+     *
+     * @return $this
+     */
+    public function setConfirmedAt(DateTimeImmutable $confirmedAt): self
     {
         $this->confirmedAt = $confirmedAt;
 
         return $this;
     }
 
-    public function getEvent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
