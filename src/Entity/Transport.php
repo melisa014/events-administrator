@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TransportRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Transport
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -19,40 +22,62 @@ class Transport
     private $id;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $cost;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection|Tiket[]|null
+     *
+     * @ORM\OneToMany(targetEntity="Tiket", mappedBy="transport", cascade={"remove", "persist"})
      */
     private $tikets;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="transports")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return int|null
+     */
     public function getCost(): ?int
     {
         return $this->cost;
     }
 
+    /**
+     * @param int $cost
+     *
+     * @return $this
+     */
     public function setCost(int $cost): self
     {
         $this->cost = $cost;
@@ -60,11 +85,19 @@ class Transport
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string|null $type
+     *
+     * @return $this
+     */
     public function setType(?string $type): self
     {
         $this->type = $type;
@@ -72,35 +105,61 @@ class Transport
         return $this;
     }
 
-    public function getTikets(): ?string
+    /**
+     * @return Collection|null
+     */
+    public function getTikets(): ?Collection
     {
         return $this->tikets;
     }
 
-    public function setTikets(?string $tikets): self
+    /**
+     * @param Tiket|null $tiket
+     *
+     * @return self
+     */
+    public function setTikets(?Tiket $tiket): self
     {
-        $this->tikets = $tikets;
+        if (!$this->tikets->contains($tiket)) {
+            $this->tikets->add($tiket);
+        }
 
         return $this;
     }
 
-    public function getEvent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getConfirmedAt(): ?DateTimeImmutable
     {
         return $this->confirmedAt;
     }
 
+    /**
+     * @param DateTimeImmutable $confirmedAt
+     *
+     * @return $this
+     */
     public function setConfirmedAt(DateTimeImmutable $confirmedAt): self
     {
         $this->confirmedAt = $confirmedAt;

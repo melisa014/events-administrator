@@ -70,6 +70,13 @@ class Person
     private $notifications;
 
     /**
+     * @var Collection|Tiket[]|null
+     *
+     * @ORM\OneToMany(targetEntity="Tiket", mappedBy="passenger", cascade={"remove", "persist"})
+     */
+    private $tikets;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -218,6 +225,28 @@ class Person
     {
         if (!$this->notifications->contains($notification)) {
             $this->notifications->add($notification);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getTikets(): ?Collection
+    {
+        return $this->tikets;
+    }
+
+    /**
+     * @param Tiket|null $tiket
+     *
+     * @return self
+     */
+    public function setTikets(?Tiket $tiket): self
+    {
+        if (!$this->tikets->contains($tiket)) {
+            $this->tikets->add($tiket);
         }
 
         return $this;
