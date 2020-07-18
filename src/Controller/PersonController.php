@@ -6,10 +6,10 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class EventController extends AbstractFOSRestController
+class PersonController extends AbstractFOSRestController
 {
     /**
-     * @Rest\Get("/event", name="event")
+     * @Rest\Get("/person", name="person")
      *
      * @return JsonResponse
      */
@@ -17,19 +17,19 @@ class EventController extends AbstractFOSRestController
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/EventController.php',
+            'path' => 'src/Controller/PersonController.php',
         ]);
     }
 
     /**
-     * @Rest\Post("/event", name="create_event")
+     * @Rest\Post("/person", name="create_person")
      *
      * @return JsonResponse
      */
-    public function createEvent()
+    public function createPerson()
     {
         return $this->json([
-            'event_id' => 1,
+            'person_id' => 1,
         ]);
     }
 }
