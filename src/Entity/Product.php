@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -16,6 +17,7 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"single", "withNutrition"})
      */
     private $id;
 
@@ -23,6 +25,7 @@ class Product
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Groups({"single", "withNutrition"})
      */
     private $name;
 
@@ -30,6 +33,7 @@ class Product
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"single", "withNutrition"})
      */
     private $quantity;
 
@@ -37,6 +41,7 @@ class Product
      * @var int
      *
      * @ORM\Column(type="integer", options={"default" : 0})
+     * @Groups({"single", "withNutrition"})
      */
     private $price;
 
@@ -45,6 +50,7 @@ class Product
      *
      * @ORM\OneToOne(targetEntity="Nutrition", inversedBy="products")
      * @ORM\JoinColumn(name="nutrition_id", referencedColumnName="id")
+     * @Groups({"withNutrition"})
      */
     private $nutrition;
 
