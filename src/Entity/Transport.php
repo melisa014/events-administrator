@@ -29,7 +29,7 @@ class Transport
     private $cost;
 
     /**
-     * @var int
+     * @var TransportType
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
