@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DocumentRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,40 +19,63 @@ class Document
     private $id;
 
     /**
+     * @var DocumentType
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $type;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $cost;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Person
+     *
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="notifications")
+     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="notifications")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
 
     /**
+     * @var DateTimeImmutable
+     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $confirmedAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -59,11 +83,19 @@ class Document
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getCost(): ?int
     {
         return $this->cost;
     }
 
+    /**
+     * @param int|null $cost
+     *
+     * @return $this
+     */
     public function setCost(?int $cost): self
     {
         $this->cost = $cost;
@@ -71,36 +103,60 @@ class Document
         return $this;
     }
 
-    public function getPerson(): ?string
+    /**
+     * @return Person|null
+     */
+    public function getPerson(): ?Person
     {
         return $this->person;
     }
 
-    public function setPerson(string $person): self
+    /**
+     * @param Person $person
+     *
+     * @return $this
+     */
+    public function setPerson(Person $person): self
     {
         $this->person = $person;
 
         return $this;
     }
 
-    public function getEvent(): ?string
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
     {
         return $this->event;
     }
 
-    public function setEvent(string $event): self
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
 
         return $this;
     }
 
-    public function getConfirmedAt(): ?\DateTimeImmutable
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getConfirmedAt(): ?DateTimeImmutable
     {
         return $this->confirmedAt;
     }
 
-    public function setConfirmedAt(?\DateTimeImmutable $confirmedAt): self
+    /**
+     * @param DateTimeImmutable|null $confirmedAt
+     *
+     * @return $this
+     */
+    public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
     {
         $this->confirmedAt = $confirmedAt;
 

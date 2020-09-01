@@ -19,14 +19,14 @@ class Part
     private $id;
 
     /**
-     * @var string
+     * @var PartType
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $partType;
+    private $type;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -63,21 +63,21 @@ class Part
     }
 
     /**
-     * @return string|null
+     * @return PartType|null
      */
-    public function getPartType(): ?string
+    public function getType(): ?PartType
     {
-        return $this->partType;
+        return $this->type;
     }
 
     /**
-     * @param string $partType
+     * @param string $type
      *
      * @return $this
      */
-    public function setPartType(string $partType): self
+    public function setType(string $type): self
     {
-        $this->partType = $partType;
+        $this->type = $type;
 
         return $this;
     }
