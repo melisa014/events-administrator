@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PartRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,6 +54,13 @@ class Part
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="part", cascade={"remove", "persist"})
      */
     private $comments;
+
+    /**
+     * @var DateTimeImmutable
+     *
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $confirmedAt;
 
     /**
      * @return int|null
@@ -162,6 +170,26 @@ class Part
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getConfirmedAt(): ?DateTimeImmutable
+    {
+        return $this->confirmedAt;
+    }
+
+    /**
+     * @param DateTimeImmutable|null $confirmedAt
+     *
+     * @return $this
+     */
+    public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
+    {
+        $this->confirmedAt = $confirmedAt;
 
         return $this;
     }

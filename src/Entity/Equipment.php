@@ -43,13 +43,6 @@ class Equipment
     private $timetableItem;
 
     /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $confirmedAt;
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -113,26 +106,6 @@ class Equipment
     public function setTimetableItem(TimetableItem $timetableItem): self
     {
         $this->timetableItem = $timetableItem;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeImmutable|null
-     */
-    public function getConfirmedAt(): ?DateTimeImmutable
-    {
-        return $this->confirmedAt;
-    }
-
-    /**
-     * @param DateTimeImmutable|null $confirmedAt
-     *
-     * @return $this
-     */
-    public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
-    {
-        $this->confirmedAt = $confirmedAt;
 
         return $this;
     }
