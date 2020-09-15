@@ -39,7 +39,7 @@ class Event
     /**
      * @var Administrator
      *
-     * @ORM\OneToOne(targetEntity="Person")
+     * @ORM\OneToOne(targetEntity="App\Entity\Person\Administrator")
      * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id")
      */
     private $organizer;

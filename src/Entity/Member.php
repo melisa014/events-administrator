@@ -24,7 +24,7 @@ class Member
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="memberships")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="memberships")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $person;

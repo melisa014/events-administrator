@@ -31,7 +31,7 @@ class Notification
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="notifications")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;

@@ -87,7 +87,7 @@ class Tiket
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="tikets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="tikets")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $passenger;
