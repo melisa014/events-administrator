@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PartRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,14 +20,14 @@ class Part
     private $id;
 
     /**
-     * @var string
+     * @var PartType
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $partType;
+    private $type;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -55,6 +56,13 @@ class Part
     private $comments;
 
     /**
+     * @var DateTimeImmutable
+     *
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $confirmedAt;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -63,21 +71,21 @@ class Part
     }
 
     /**
-     * @return string|null
+     * @return PartType|null
      */
-    public function getPartType(): ?string
+    public function getType(): ?PartType
     {
-        return $this->partType;
+        return $this->type;
     }
 
     /**
-     * @param string $partType
+     * @param string $type
      *
      * @return $this
      */
-    public function setPartType(string $partType): self
+    public function setType(string $type): self
     {
-        $this->partType = $partType;
+        $this->type = $type;
 
         return $this;
     }
@@ -162,6 +170,26 @@ class Part
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getConfirmedAt(): ?DateTimeImmutable
+    {
+        return $this->confirmedAt;
+    }
+
+    /**
+     * @param DateTimeImmutable|null $confirmedAt
+     *
+     * @return $this
+     */
+    public function setConfirmedAt(?DateTimeImmutable $confirmedAt): self
+    {
+        $this->confirmedAt = $confirmedAt;
 
         return $this;
     }

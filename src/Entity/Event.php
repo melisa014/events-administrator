@@ -101,9 +101,9 @@ class Event
     private $members;
 
     /**
-     * @var Collection | Notification[]
+     * @var Collection | Document[]
      *
-     * @ORM\OneToMany(targetEntity="Notification", mappedBy="event", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="event", cascade={"remove", "persist"})
      */
     private $documents;
 

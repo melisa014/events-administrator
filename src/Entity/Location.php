@@ -43,13 +43,6 @@ class Location
     private $contactPerson;
 
     /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $confirmedAt;
-
-    /**
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="locations")
@@ -121,26 +114,6 @@ class Location
     public function setContactPerson(Person $contactPerson): self
     {
         $this->contactPerson = $contactPerson;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeImmutable|null
-     */
-    public function getConfirmedAt(): ?DateTimeImmutable
-    {
-        return $this->confirmedAt;
-    }
-
-    /**
-     * @param DateTimeImmutable $confirmedAt
-     *
-     * @return $this
-     */
-    public function setConfirmedAt(DateTimeImmutable $confirmedAt): self
-    {
-        $this->confirmedAt = $confirmedAt;
 
         return $this;
     }

@@ -29,7 +29,7 @@ class Transport
     private $cost;
 
     /**
-     * @var int
+     * @var TransportType
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -49,13 +49,6 @@ class Transport
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
-
-    /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $confirmedAt;
 
     /**
      * @return int|null
@@ -143,26 +136,6 @@ class Transport
     public function setEvent(Event $event): self
     {
         $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeImmutable|null
-     */
-    public function getConfirmedAt(): ?DateTimeImmutable
-    {
-        return $this->confirmedAt;
-    }
-
-    /**
-     * @param DateTimeImmutable $confirmedAt
-     *
-     * @return $this
-     */
-    public function setConfirmedAt(DateTimeImmutable $confirmedAt): self
-    {
-        $this->confirmedAt = $confirmedAt;
 
         return $this;
     }
