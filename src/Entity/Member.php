@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Person;
 use App\Repository\PersonRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;

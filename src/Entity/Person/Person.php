@@ -1,13 +1,25 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Person;
 
+use App\Entity\Member;
+use App\Entity\Notification;
+use App\Entity\Task;
+use App\Entity\Tiket;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PersonRepository::class)
+ * @ORM\Table(name="person")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "person" = "App\Entity\Person\Person",
+ *     "administrator" = "App\Entity\Person\Administrator",
+ * })
  */
 class Person
 {
@@ -21,21 +33,22 @@ class Person
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
+     * @Assert\NotBlank(message="Поле обязательно к заполнению")
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
 
     /**
-     * @var int
+     * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $middleName;
 
     /**
-     * @var int
+     * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -44,6 +57,12 @@ class Person
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Поле обязательно к заполнению")
+     * @Assert\Regex(
+     *     pattern="/^79\d{9}/",
+     *     match=false,
+     *     message="Введите номер телефона в формате 79*********"
+     * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
@@ -51,28 +70,28 @@ class Person
     /**
      * @var Collection | Member[]
      *
-     * @ORM\OneToMany(targetEntity="Member", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="App\Entity\Member", mappedBy="person")
      */
     private $memberships;
 
     /**
      * @var Collection | Task[]
      *
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="person", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="person", cascade={"remove", "persist"})
      */
     private $tasks;
 
     /**
      * @var Collection | Notification[]
      *
-     * @ORM\OneToMany(targetEntity="Notification", mappedBy="person", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="person", cascade={"remove", "persist"})
      */
     private $notifications;
 
     /**
      * @var Collection|Tiket[]|null
      *
-     * @ORM\OneToMany(targetEntity="Tiket", mappedBy="passenger", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Tiket", mappedBy="passenger", cascade={"remove", "persist"})
      */
     private $tikets;
 
