@@ -1,0 +1,30 @@
+security:
+    encoders:
+        App\Entity\Person\Administrator: bcrypt
+
+    providers:
+        database_users:
+            entity:
+                class: App\Entity\User
+        users_in_memory:
+            memory: null
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            lazy: true
+            provider: database_users
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    access_control:
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/event, roles: USER }
+        - { path: ^/person, roles: USER }
