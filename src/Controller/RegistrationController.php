@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Person\Administrator;
 use App\Form\Type\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +28,10 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('plainPassword')->getData() !== $form->get('confirmPassword')->getData()) {
+                $form->addError(new FormError('Ошибка при подтверждении пароля'));
+            }
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(

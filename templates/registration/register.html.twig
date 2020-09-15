@@ -14,8 +14,9 @@
         {{ form_row(registrationForm.middleName, {label: 'Отчество'}) }}
         {{ form_row(registrationForm.lastName, {label: 'Фамилия'}) }}
 
-        {{ form_row(registrationForm.password, {label: 'Номер телефона'})  }}
-        {{ form_row(registrationForm.plainPassword, {label: 'Подтвердите пароль'}) }}
+        {{ form_row(registrationForm.phone, {label: 'Номер телефона'})  }}
+        {{ form_row(registrationForm.plainPassword, {label: 'Пароль'}) }}
+        {{ form_row(registrationForm.confirmPassword, {label: 'Подтвердите пароль'}) }}
         {{ form_row(registrationForm.agreeTerms, {label: 'Я согласен на всё: я люблю приключения'})  }}
 
         <button type="submit" class="btn">Регистрация</button>

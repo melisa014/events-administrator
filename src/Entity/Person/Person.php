@@ -41,14 +41,14 @@ class Person
     private $firstName;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $middleName;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -104,9 +104,9 @@ class Person
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -132,11 +132,11 @@ class Person
     }
 
     /**
-     * @param string $middleName
+     * @param string|null $middleName
      *
      * @return $this
      */
-    public function setMiddleName(string $middleName): self
+    public function setMiddleName(?string $middleName): self
     {
         $this->middleName = $middleName;
 
@@ -152,11 +152,11 @@ class Person
     }
 
     /**
-     * @param string $lastName
+     * @param string|null $lastName
      *
      * @return $this
      */
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
