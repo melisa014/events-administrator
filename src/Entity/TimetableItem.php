@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Person;
 use App\Repository\TimetableItemRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
@@ -52,7 +53,7 @@ class TimetableItem
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="notifications")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $chargePerson;

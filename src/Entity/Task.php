@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Person;
 use App\Repository\TaskRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,7 +31,7 @@ class Task
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="tasks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="tasks")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $chargePerson;

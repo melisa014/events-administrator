@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Administrator;
 use App\Repository\EventRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
@@ -36,9 +37,9 @@ class Event
     private $type;
 
     /**
-     * @var Person
+     * @var Administrator
      *
-     * @ORM\OneToOne(targetEntity="Person")
+     * @ORM\OneToOne(targetEntity="App\Entity\Person\Administrator")
      * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id")
      */
     private $organizer;
@@ -170,19 +171,19 @@ class Event
     }
 
     /**
-     * @return Person|null
+     * @return Administrator|null
      */
-    public function getOrganizer(): ?Person
+    public function getOrganizer(): ?Administrator
     {
         return $this->organizer;
     }
 
     /**
-     * @param Person $organizer
+     * @param Administrator $organizer
      *
      * @return $this
      */
-    public function setOrganizer(Person $organizer): self
+    public function setOrganizer(Administrator $organizer): self
     {
         $this->organizer = $organizer;
 

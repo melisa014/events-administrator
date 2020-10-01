@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Person;
 use App\Repository\NotificationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,7 +31,7 @@ class Notification
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="notifications")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;

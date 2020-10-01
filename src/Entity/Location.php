@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Person;
 use App\Repository\LocationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -37,7 +38,7 @@ class Location
     /**
      * @var Person
      *
-     * @ORM\OneToOne(targetEntity="Person")
+     * @ORM\OneToOne(targetEntity="App\Entity\Person\Person")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $contactPerson;

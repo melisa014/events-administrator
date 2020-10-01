@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Person\Person;
 use App\Repository\PersonRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,7 @@ class Member
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="memberships")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\Person", inversedBy="memberships")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $person;
