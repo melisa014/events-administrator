@@ -15,9 +15,9 @@ class Administrator extends Person implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", unique=true, nullable=true)
      */
-    private $password;
+    private $apiToken;
 
     /**
      * @return array|string[]
@@ -25,14 +25,6 @@ class Administrator extends Person implements UserInterface
     public function getRoles()
     {
         return ['ROLE_ADMIN'];
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -61,14 +53,15 @@ class Administrator extends Person implements UserInterface
     {}
 
     /**
-     * @param string $encodePassword
+     * Returns the password used to authenticate the user.
      *
-     * @return self
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string|null The encoded password if any
      */
-    public function setPassword(string $encodePassword): self
+    public function getPassword()
     {
-        $this->password = $encodePassword;
-
-        return $this;
+        return null;
     }
 }
