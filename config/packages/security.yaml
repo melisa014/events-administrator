@@ -26,5 +26,5 @@ security:
 
     access_control:
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/event, roles: USER }
-        - { path: ^/person, roles: USER }
+        - { path: ^/event, roles: ROLE_ADMIN }
+        - { path: ^/person, roles: ROLE_ADMIN }
