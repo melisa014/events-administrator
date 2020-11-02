@@ -6,6 +6,7 @@ use App\Entity\Person\Administrator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +32,10 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      * Called on every request to decide if this authenticator should be
      * used for the request. Returning `false` will cause this authenticator
      * to be skipped.
+     *
+     * @param Request $request
+     *
+     * @return bool
      */
     public function supports(Request $request)
     {
@@ -40,12 +45,22 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     /**
      * Called on every request. Return whatever credentials you want to
      * be passed to getUser() as $credentials.
+     *
+     * @param Request $request
+     *
+     * @return string|null
      */
     public function getCredentials(Request $request)
     {
         return $request->headers->get('X-AUTH-TOKEN');
     }
 
+    /**
+     * @param mixed                 $credentials
+     * @param UserProviderInterface $userProvider
+     *
+     * @return object|UserInterface|null
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         if (null === $credentials) {
@@ -60,6 +75,12 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
             ;
     }
 
+    /**
+     * @param mixed         $credentials
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         // Check credentials - e.g. make sure the password is valid.
@@ -69,12 +90,25 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         return true;
     }
 
+    /**
+     * @param Request        $request
+     * @param TokenInterface $token
+     * @param string         $providerKey
+     *
+     * @return Response|null
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         // on success, let the request continue
         return null;
     }
 
+    /**
+     * @param Request                 $request
+     * @param AuthenticationException $exception
+     *
+     * @return JsonResponse|Response|null
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $data = [
@@ -90,6 +124,11 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Called when authentication is needed, but it's not sent
+     *
+     * @param Request                      $request
+     * @param AuthenticationException|null $authException
+     *
+     * @return JsonResponse
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
